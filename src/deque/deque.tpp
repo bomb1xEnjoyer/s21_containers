@@ -1,7 +1,8 @@
 #pragma once
 
 // Deque Member functions
-template <typename T> s21::deque<T>::deque() {
+template <typename T>
+s21::deque<T>::deque() {
   list.size = 0;
   list.head = nullptr;
   list.tail = nullptr;
@@ -9,15 +10,20 @@ template <typename T> s21::deque<T>::deque() {
 
 template <typename T>
 s21::deque<T>::deque(std::initializer_list<value_type> const &items) {
-  for (auto item = items.begin(); item != items.end(); ++item)
-    push_back(*item);
+  for (auto item = items.begin(); item != items.end(); ++item) push_back(*item);
 }
 
-template <typename T> s21::deque<T>::deque(const deque &other) {
-  list.size = other.size;
+template <typename T>
+s21::deque<T>::deque(const deque &other) {
+  Node *current = other.list.head;
+  while (current) {
+    push_back(current->data);
+    current = current->previous;
+  }
 }
 
-template <typename T> s21::deque<T>::deque(deque &&other) {
+template <typename T>
+s21::deque<T>::deque(deque &&other) {
   list.size = other.size;
   list.head = other.list.head;
   list.tail = other.list.tail;
@@ -26,11 +32,28 @@ template <typename T> s21::deque<T>::deque(deque &&other) {
   other.list.tail = nullptr;
 }
 
-template <typename T> s21::deque<T>::~deque() {}
+template <typename T>
+s21::deque<T>::~deque() {
+  while (list.head) pop_front();
+}
+
+template <typename T>
+s21::deque<T> &s21::deque<T>::operator=(deque &&other) {
+  if (this != &other) {
+    while (list.head) pop_front();
+    list.size = other.list.size;
+    list.head = other.list.head;
+    list.tail = other.list.tail;
+    other.list.size = 0;
+    other.list.head = nullptr;
+    other.list.tail = nullptr;
+  }
+  return *this;
+}
 
 // Deque Element access
 template <typename T>
-typename s21::deque<T>::const_reference s21::deque<T>::top() const {
+typename s21::deque<T>::const_reference s21::deque<T>::front() const {
   return list.head->data;
 }
 
@@ -40,7 +63,8 @@ typename s21::deque<T>::const_reference s21::deque<T>::back() const {
 }
 
 // Deque Capacity
-template <typename T> bool s21::deque<T>::empty() const {
+template <typename T>
+bool s21::deque<T>::empty() const {
   return list.head == nullptr;
 }
 
@@ -50,7 +74,8 @@ typename s21::deque<T>::size_type s21::deque<T>::size() const {
 }
 
 // Deque Modifiers
-template <typename T> void s21::deque<T>::push_back(const_reference value) {
+template <typename T>
+void s21::deque<T>::push_back(const_reference value) {
   Node *new_node = new Node(value);
   if (list.tail) {
     new_node->next = list.tail;
@@ -60,8 +85,7 @@ template <typename T> void s21::deque<T>::push_back(const_reference value) {
     list.tail = new_node;
     if (list.head) {
       Node *current = list.head;
-      while (list.head->previous)
-        current = current->previous;
+      while (list.head->previous) current = current->previous;
       current->previous = list.tail;
       list.tail->next = current;
     } else
@@ -70,7 +94,8 @@ template <typename T> void s21::deque<T>::push_back(const_reference value) {
   ++list.size;
 }
 
-template <typename T> void s21::deque<T>::push_front(const_reference value) {
+template <typename T>
+void s21::deque<T>::push_front(const_reference value) {
   Node *new_node = new Node(value);
   if (list.head) {
     new_node->previous = list.head;
@@ -80,15 +105,39 @@ template <typename T> void s21::deque<T>::push_front(const_reference value) {
     list.head = new_node;
     if (list.tail) {
       Node *current = list.tail;
-      while (current->next)
-        current = current->next;
+      while (current->next) current = current->next;
       current->next = list.head;
       list.head->previous = current;
     } else
       list.tail = new_node;
   }
+  ++list.size;
 }
 
-template <typename T> void s21::deque<T>::pop_front() {}
+template <typename T>
+void s21::deque<T>::pop_front() {
+  if (list.head) {
+    if (list.head->previous) {
+      Node *previous_node = list.head->previous;
+      delete list.head;
+      list.head = previous_node;
+    } else {
+      Node *node = list.head;
+      delete node;
+      list.head = nullptr;
+      list.tail = nullptr;
+    }
+    --list.size;
+  }
+}
 
-template <typename T> void s21::deque<T>::swap(deque &other) {}
+template <typename T>
+void s21::deque<T>::swap(deque &other) {
+  LinkedList temp(other.list);
+  other.list.size = list.size;
+  other.list.head = list.head;
+  other.list.tail = list.tail;
+  list.size = temp.size;
+  list.head = temp.head;
+  list.tail = temp.tail;
+}
