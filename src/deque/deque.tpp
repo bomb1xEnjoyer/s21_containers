@@ -24,10 +24,10 @@ s21::deque<T>::deque(const deque &other) {
 
 template <typename T>
 s21::deque<T>::deque(deque &&other) {
-  list.size = other.size;
+  list.size = other.list.size;
   list.head = other.list.head;
   list.tail = other.list.tail;
-  other.size = 0;
+  other.list.size = 0;
   other.list.head = nullptr;
   other.list.tail = nullptr;
 }
@@ -54,12 +54,18 @@ s21::deque<T> &s21::deque<T>::operator=(deque &&other) {
 // Deque Element access
 template <typename T>
 typename s21::deque<T>::const_reference s21::deque<T>::front() const {
-  return list.head->data;
+  if (list.head)
+    return list.head->data;
+  else
+    throw std::logic_error("The deque is empty, front pointer equals nullptr");
 }
 
 template <typename T>
 typename s21::deque<T>::const_reference s21::deque<T>::back() const {
-  return list.tail->data;
+  if (list.tail)
+    return list.tail->data;
+  else
+    throw std::logic_error("The deque is empty, back pointer equals nullptr");
 }
 
 // Deque Capacity
@@ -133,11 +139,5 @@ void s21::deque<T>::pop_front() {
 
 template <typename T>
 void s21::deque<T>::swap(deque &other) {
-  LinkedList temp(other.list);
-  other.list.size = list.size;
-  other.list.head = list.head;
-  other.list.tail = list.tail;
-  list.size = temp.size;
-  list.head = temp.head;
-  list.tail = temp.tail;
+  std::swap(list, other.list);
 }
