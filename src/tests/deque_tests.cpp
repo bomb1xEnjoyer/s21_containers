@@ -36,7 +36,8 @@ TEST(TestDeque, TestDequeInit2) {
   EXPECT_TRUE(deque1.front() == 1);
   EXPECT_TRUE(deque1.back() == 5);
 
-  std::initializer_list<double> items2 = {1.5, 2.123, 3.987765, 4.0001, 5.000001};
+  std::initializer_list<double> items2 = {1.5, 2.123, 3.987765, 4.0001,
+                                          5.000001};
   s21::deque<double> deque2(items2);
   EXPECT_TRUE(deque2.size() == 5);
   EXPECT_TRUE(deque2.empty() == false);
@@ -67,7 +68,8 @@ TEST(TestDeque, TestDequeInit3) {
   EXPECT_TRUE(deque1.front() == other1.front());
   EXPECT_TRUE(deque1.back() == other1.back());
 
-  std::initializer_list<double> items2 = {1.5, 2.123, 3.987765, 4.0001, 5.000001};
+  std::initializer_list<double> items2 = {1.5, 2.123, 3.987765, 4.0001,
+                                          5.000001};
   s21::deque<double> other2(items2), deque2(other2);
   EXPECT_TRUE(deque2.size() == other2.size());
   EXPECT_TRUE(deque2.front() == other2.front());
@@ -101,7 +103,8 @@ TEST(TestDeque, TestDequeInit4) {
   EXPECT_TRUE(deque1.front() == 1);
   EXPECT_TRUE(deque1.back() == 5);
 
-  s21::deque<double> deque2(s21::deque<double>{1.5, 2.123, 3.987765, 4.0001, 5.000001});
+  s21::deque<double> deque2(
+      s21::deque<double>{1.5, 2.123, 3.987765, 4.0001, 5.000001});
   EXPECT_TRUE(deque2.size() == 5);
   EXPECT_TRUE(deque2.empty() == false);
   EXPECT_TRUE(deque2.front() == 1.5);
@@ -129,7 +132,8 @@ TEST(TestDeque, TestDequeOperatorEq) {
   EXPECT_TRUE(deque1.front() == 1);
   EXPECT_TRUE(deque1.back() == 5);
 
-  s21::deque<double> deque2 = s21::deque<double>{1.5, 2.123, 3.987765, 4.0001, 5.000001};
+  s21::deque<double> deque2 =
+      s21::deque<double>{1.5, 2.123, 3.987765, 4.0001, 5.000001};
   EXPECT_TRUE(deque2.size() == 5);
   EXPECT_TRUE(deque2.empty() == false);
   EXPECT_TRUE(deque2.front() == 1.5);
@@ -152,7 +156,7 @@ TEST(TestDeque, TestDequeOperatorEq) {
 // push_back(const_reference value) test
 TEST(DequeTest, DequeTestPushBack1) {
   s21::deque<int> int_deque;
-  
+
   int_deque.push_back(1);
   EXPECT_TRUE(int_deque.back() == 1);
   EXPECT_TRUE(int_deque.size() == 1);
@@ -229,7 +233,7 @@ TEST(DequeTest, DequeTestPushBack4) {
 // push_front(const_reference value) test
 TEST(DequeTest, DequeTestPushFront1) {
   s21::deque<int> int_deque;
-  
+
   int_deque.push_front(1);
   EXPECT_TRUE(int_deque.front() == 1);
   EXPECT_TRUE(int_deque.size() == 1);
@@ -304,5 +308,121 @@ TEST(DequeTest, DequeTestPushFront4) {
 }
 
 // pop_front() test
+TEST(DequeTest, DequeTestPopFront1) {
+  std::initializer_list<int> items = {1, 2, 3};
+  s21::deque<int> int_deque(items);
+
+  int_deque.pop_front();
+  EXPECT_TRUE(int_deque.size() == 2);
+  EXPECT_TRUE(int_deque.front() == 2);
+
+  int_deque.push_front(4);
+  int_deque.push_front(5);
+  int_deque.pop_front();
+  EXPECT_TRUE(int_deque.size() == 3);
+  EXPECT_TRUE(int_deque.front() == 4);
+
+  while (int_deque.size()) int_deque.pop_front();
+  EXPECT_TRUE(int_deque.size() == 0);
+  EXPECT_ANY_THROW(int_deque.front());
+}
+
+TEST(DequeTest, DequeTestPopFront2) {
+  std::initializer_list<double> items = {1.00001, 2.5, 3.14};
+  s21::deque<double> double_deque(items);
+
+  double_deque.pop_front();
+  EXPECT_TRUE(double_deque.size() == 2);
+  EXPECT_TRUE(double_deque.front() == 2.5);
+
+  double_deque.push_front(4.44);
+  double_deque.push_front(5.505);
+  double_deque.pop_front();
+  EXPECT_TRUE(double_deque.size() == 3);
+  EXPECT_TRUE(double_deque.front() == 4.44);
+
+  while (double_deque.size()) double_deque.pop_front();
+  EXPECT_TRUE(double_deque.size() == 0);
+  EXPECT_ANY_THROW(double_deque.front());
+}
+
+TEST(DequeTest, DequeTestPopFront3) {
+  std::initializer_list<char> items = {'z', '[', ')'};
+  s21::deque<char> char_deque(items);
+
+  char_deque.pop_front();
+  EXPECT_TRUE(char_deque.size() == 2);
+  EXPECT_TRUE(char_deque.front() == '[');
+
+  char_deque.push_front('@');
+  char_deque.push_front('o');
+  char_deque.pop_front();
+  EXPECT_TRUE(char_deque.size() == 3);
+  EXPECT_TRUE(char_deque.front() == '@');
+
+  while (char_deque.size()) char_deque.pop_front();
+  EXPECT_TRUE(char_deque.size() == 0);
+  EXPECT_ANY_THROW(char_deque.front());
+}
+
+TEST(DequeTest, DequeTestPopFront4) {
+  std::string str1 = "some_string1", str2 = "some_string2", str3 = "";
+  std::initializer_list<std::string> items = {str1, str2, str3};
+  s21::deque<std::string> str_deque(items);
+
+  str_deque.pop_front();
+  EXPECT_TRUE(str_deque.size() == 2);
+  EXPECT_TRUE(str_deque.front() == str2);
+
+  str_deque.push_front("push front");
+  str_deque.push_front("pop front");
+  str_deque.pop_front();
+  EXPECT_TRUE(str_deque.size() == 3);
+  EXPECT_TRUE(str_deque.front() == "push front");
+
+  while (str_deque.size()) str_deque.pop_front();
+  EXPECT_TRUE(str_deque.size() == 0);
+  EXPECT_ANY_THROW(str_deque.front());
+}
 
 // swap(deque &other) test
+TEST(DequeTest, DequeTestSwap1) {
+  s21::deque<int> deque1{1, 2, 3}, deque2{4, 5, 6, 7};
+
+  deque1.swap(deque2);
+
+  EXPECT_TRUE(deque1.size() == 4);
+  EXPECT_TRUE(deque2.size() == 3);
+
+  EXPECT_TRUE(deque1.front() == 4);
+  EXPECT_TRUE(deque1.back() == 7);
+  EXPECT_TRUE(deque2.front() == 1);
+  EXPECT_TRUE(deque2.back() == 3);
+
+  deque1.pop_front();
+  EXPECT_TRUE(deque1.front() == 5);
+
+  deque2.pop_front();
+  EXPECT_TRUE(deque2.front() == 2);
+}
+
+TEST(DequeTest, DequeTestSwap2) {
+  std::string str1 = "123", str2 = "", str3 = "\nsome text\n", str4 = "four";
+  s21::deque<std::string> deque1{str1, str2}, deque2{str3, str4};
+
+  deque1.swap(deque2);
+
+  EXPECT_TRUE(deque1.size() == 2);
+  EXPECT_TRUE(deque2.size() == 2);
+
+  EXPECT_TRUE(deque1.front() == "\nsome text\n");
+  EXPECT_TRUE(deque1.back() == "four");
+  EXPECT_TRUE(deque2.front() == "123");
+  EXPECT_TRUE(deque2.back() == "");
+
+  deque1.pop_front();
+  EXPECT_TRUE(deque1.front() == "four");
+
+  deque2.pop_front();
+  EXPECT_TRUE(deque2.front() == "");
+}
