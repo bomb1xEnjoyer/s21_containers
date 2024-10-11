@@ -1,7 +1,7 @@
 #include "tests.h"
 
 // constructor deque() test
-TEST(TestDeque, TestDequeInit1) {
+TEST(DequeTest, DequeTestInit1) {
   s21::deque<int> deque1;
   EXPECT_TRUE(deque1.size() == 0);
   EXPECT_TRUE(deque1.empty() == true);
@@ -28,7 +28,7 @@ TEST(TestDeque, TestDequeInit1) {
 }
 
 // constructor deque(std::initializer_list<value_type> const &items) test
-TEST(TestDeque, TestDequeInit2) {
+TEST(DequeTest, DequeTestInit2) {
   std::initializer_list<int> items1 = {1, 2, 3, 4, 5};
   s21::deque<int> deque1(items1);
   EXPECT_TRUE(deque1.size() == 5);
@@ -61,7 +61,7 @@ TEST(TestDeque, TestDequeInit2) {
 }
 
 // constructor deque(const deque &other) test
-TEST(TestDeque, TestDequeInit3) {
+TEST(DequeTest, DequeTestInit3) {
   std::initializer_list<int> items1 = {1, 2, 3, 4, 5};
   s21::deque<int> other1(items1), deque1(other1);
   EXPECT_TRUE(deque1.size() == other1.size());
@@ -96,7 +96,7 @@ TEST(TestDeque, TestDequeInit3) {
 }
 
 // constructor deque(deque &&other) test
-TEST(TestDeque, TestDequeInit4) {
+TEST(DequeTest, DequeTestInit4) {
   s21::deque<int> deque1(s21::deque<int>{1, 2, 3, 4, 5});
   EXPECT_TRUE(deque1.size() == 5);
   EXPECT_TRUE(deque1.empty() == false);
@@ -125,7 +125,7 @@ TEST(TestDeque, TestDequeInit4) {
 }
 
 // operator=(deque &&other) test
-TEST(TestDeque, TestDequeOperatorEq) {
+TEST(DequeTest, DequeTestOperatorEq) {
   s21::deque<int> deque1 = s21::deque<int>{1, 2, 3, 4, 5};
   EXPECT_TRUE(deque1.size() == 5);
   EXPECT_TRUE(deque1.empty() == false);
