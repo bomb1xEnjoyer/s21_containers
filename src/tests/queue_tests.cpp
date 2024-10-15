@@ -349,3 +349,61 @@ TEST(QueueTest, QueueTestSwap2) {
   queue2.pop();
   EXPECT_TRUE(queue2.front() == "");
 }
+
+// void insert_many_back(Args&&... args) test
+TEST(QueueTest, QueueInsertMany1) {
+  s21::queue<int> int_queue;
+
+  int_queue.insert_many_back(1, 2, 3);
+  EXPECT_TRUE(int_queue.front() == 1);
+  EXPECT_TRUE(int_queue.back() == 3);
+
+  int_queue.pop();
+  EXPECT_TRUE(int_queue.front() == 2);
+
+  int_queue.push(10);
+  EXPECT_TRUE(int_queue.back() == 10);
+}
+
+TEST(QueueTest, QueueInsertMany2) {
+  s21::queue<double> double_queue;
+
+  double_queue.insert_many_back(1.15, 2.789, 3.14);
+  EXPECT_TRUE(double_queue.front() == 1.15);
+  EXPECT_TRUE(double_queue.back() == 3.14);
+
+  double_queue.pop();
+  EXPECT_TRUE(double_queue.front() == 2.789);
+
+  double_queue.push(10.00);
+  EXPECT_TRUE(double_queue.back() == 10.00);
+}
+
+TEST(QueueTest, QueueInsertMany3) {
+  s21::queue<char> char_queue;
+
+  char_queue.insert_many_back('a', '=', '*');
+  EXPECT_TRUE(char_queue.front() == 'a');
+  EXPECT_TRUE(char_queue.back() == '*');
+
+  char_queue.pop();
+  EXPECT_TRUE(char_queue.front() == '=');
+
+  char_queue.push(105);
+  EXPECT_TRUE(char_queue.back() == 105);
+}
+
+TEST(QueueTest, QueueInsertMany4) {
+  std::string str1 = "first", str2 = "second", str3 = "last";
+  s21::queue<std::string> string_queue;
+
+  string_queue.insert_many_back(str1, str2, str3);
+  EXPECT_TRUE(string_queue.front() == "first");
+  EXPECT_TRUE(string_queue.back() == "last");
+
+  string_queue.pop();
+  EXPECT_TRUE(string_queue.front() == "second");
+
+  string_queue.push("12345");
+  EXPECT_TRUE(string_queue.back() == "12345");
+}

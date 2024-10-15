@@ -33,7 +33,9 @@ class queue {
   void push(const_reference value);
   void pop();
   void swap(queue &other);
-  // void insert_many_back(Args &&...args);
+
+  template <typename... Args>
+  void insert_many_back(Args &&...args);
 
  private:
   Deque deque;

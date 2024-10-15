@@ -61,5 +61,8 @@ void s21::queue<T, Deque>::swap(queue &other) {
   std::swap(deque, other.deque);
 }
 
-// template <typename T, typename Deque>
-// void insert_many_back(Args &&...args);
+template <typename T, typename Deque>
+template <typename... Args>
+void s21::queue<T, Deque>::insert_many_back(Args &&...args) {
+  std::initializer_list<int>{(push(std::forward<Args>(args)), 0)...};
+}

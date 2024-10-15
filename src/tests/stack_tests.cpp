@@ -320,3 +320,73 @@ TEST(StackTest, StackTestSwap2) {
   stack2.pop();
   EXPECT_TRUE(stack2.top() == "");
 }
+
+// void insert_many_back(Args&&... args) test
+TEST(StackTest, StackInsertMany1) {
+  s21::stack<int> int_stack;
+
+  int_stack.insert_many_back(1, 2, 3);
+  EXPECT_TRUE(int_stack.top() == 3);
+
+  int_stack.pop();
+  EXPECT_TRUE(int_stack.top() == 2);
+
+  int_stack.push(10);
+  EXPECT_TRUE(int_stack.top() == 10);
+
+  int_stack.pop();
+  int_stack.pop();
+  EXPECT_TRUE(int_stack.top() == 1);
+}
+
+TEST(StackTest, StackInsertMany2) {
+  s21::stack<double> double_stack;
+
+  double_stack.insert_many_back(1.15, 2.789, 3.14);
+  EXPECT_TRUE(double_stack.top() == 3.14);
+
+  double_stack.pop();
+  EXPECT_TRUE(double_stack.top() == 2.789);
+
+  double_stack.push(10.00);
+  EXPECT_TRUE(double_stack.top() == 10.00);
+
+  double_stack.pop();
+  double_stack.pop();
+  EXPECT_TRUE(double_stack.top() == 1.15);
+}
+
+TEST(StackTest, StackInsertMany3) {
+  s21::stack<char> char_stack;
+
+  char_stack.insert_many_back('a', '=', '*');
+  EXPECT_TRUE(char_stack.top() == '*');
+
+  char_stack.pop();
+  EXPECT_TRUE(char_stack.top() == '=');
+
+  char_stack.push(105);
+  EXPECT_TRUE(char_stack.top() == 105);
+
+  char_stack.pop();
+  char_stack.pop();
+  EXPECT_TRUE(char_stack.top() == 'a');
+}
+
+TEST(StackTest, StackInsertMany4) {
+  std::string str1 = "first", str2 = "second", str3 = "last";
+  s21::stack<std::string> string_stack;
+
+  string_stack.insert_many_back(str1, str2, str3);
+  EXPECT_TRUE(string_stack.top() == "last");
+
+  string_stack.pop();
+  EXPECT_TRUE(string_stack.top() == "second");
+
+  string_stack.push("12345");
+  EXPECT_TRUE(string_stack.top() == "12345");
+
+  string_stack.pop();
+  string_stack.pop();
+  EXPECT_TRUE(string_stack.top() == "first");
+}
