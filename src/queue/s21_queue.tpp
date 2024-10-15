@@ -2,63 +2,63 @@
 
 // Queue Member functions
 template <typename T, typename Deque>
-s21::queue<T, Deque>::queue() : deque() {}
+s21::queue<T, Deque>::queue() : _deque() {}
 
 template <typename T, typename Deque>
 s21::queue<T, Deque>::queue(std::initializer_list<value_type> const &items)
-    : deque(items) {}
+    : _deque(items) {}
 
 template <typename T, typename Deque>
-s21::queue<T, Deque>::queue(const queue &other) : deque(other.deque) {}
+s21::queue<T, Deque>::queue(const queue &other) : _deque(other._deque) {}
 
 template <typename T, typename Deque>
-s21::queue<T, Deque>::queue(queue &&other) : deque(std::move(other)) {}
+s21::queue<T, Deque>::queue(queue &&other) : _deque(std::move(other)) {}
 
 template <typename T, typename Deque>
 s21::queue<T, Deque>::~queue() {}
 
 template <typename T, typename Deque>
 s21::queue<T, Deque> &s21::queue<T, Deque>::operator=(queue &&other) {
-  if (this != other) deque = other.deque;
+  if (this != other) _deque = other._deque;
   return *this;
 }
 
 // Queue Element access
 template <typename T, typename Deque>
 typename s21::queue<T, Deque>::const_reference s21::queue<T, Deque>::front() {
-  return deque.front();
+  return _deque.front();
 }
 
 template <typename T, typename Deque>
 typename s21::queue<T, Deque>::const_reference s21::queue<T, Deque>::back() {
-  return deque.back();
+  return _deque.back();
 }
 
 // Queue Capacity
 template <typename T, typename Deque>
 bool s21::queue<T, Deque>::empty() {
-  return deque.empty();
+  return _deque.empty();
 }
 
 template <typename T, typename Deque>
 typename s21::queue<T, Deque>::size_type s21::queue<T, Deque>::size() {
-  return deque.size();
+  return _deque.size();
 }
 
 // Queue Modifiers
 template <typename T, typename Deque>
 void s21::queue<T, Deque>::push(const_reference value) {
-  deque.push_back(value);
+  _deque.push_back(value);
 }
 
 template <typename T, typename Deque>
 void s21::queue<T, Deque>::pop() {
-  deque.pop_front();
+  _deque.pop_front();
 }
 
 template <typename T, typename Deque>
 void s21::queue<T, Deque>::swap(queue &other) {
-  std::swap(deque, other.deque);
+  std::swap(_deque, other._deque);
 }
 
 template <typename T, typename Deque>

@@ -48,7 +48,7 @@ class deque {
     Node *head = nullptr;
     Node *tail = nullptr;
   };
-  LinkedList list;
+  LinkedList _list;
 };
 
 }  // namespace s21

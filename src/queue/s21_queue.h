@@ -38,7 +38,7 @@ class queue {
   void insert_many_back(Args &&...args);
 
  private:
-  Deque deque;
+  Deque _deque;
 };
 
 }  // namespace s21

@@ -3,9 +3,9 @@
 // Deque Member functions
 template <typename T>
 s21::deque<T>::deque() {
-  list.size = 0;
-  list.head = nullptr;
-  list.tail = nullptr;
+  _list.size = 0;
+  _list.head = nullptr;
+  _list.tail = nullptr;
 }
 
 template <typename T>
@@ -15,7 +15,7 @@ s21::deque<T>::deque(std::initializer_list<value_type> const &items) {
 
 template <typename T>
 s21::deque<T>::deque(const deque &other) {
-  Node *current = other.list.head;
+  Node *current = other._list.head;
   while (current) {
     push_back(current->data);
     current = current->previous;
@@ -24,29 +24,29 @@ s21::deque<T>::deque(const deque &other) {
 
 template <typename T>
 s21::deque<T>::deque(deque &&other) {
-  list.size = other.list.size;
-  list.head = other.list.head;
-  list.tail = other.list.tail;
-  other.list.size = 0;
-  other.list.head = nullptr;
-  other.list.tail = nullptr;
+  _list.size = other._list.size;
+  _list.head = other._list.head;
+  _list.tail = other._list.tail;
+  other._list.size = 0;
+  other._list.head = nullptr;
+  other._list.tail = nullptr;
 }
 
 template <typename T>
 s21::deque<T>::~deque() {
-  while (list.head) pop_front();
+  while (_list.head) pop_front();
 }
 
 template <typename T>
 s21::deque<T> &s21::deque<T>::operator=(deque &&other) {
   if (this != &other) {
-    while (list.head) pop_front();
-    list.size = other.list.size;
-    list.head = other.list.head;
-    list.tail = other.list.tail;
-    other.list.size = 0;
-    other.list.head = nullptr;
-    other.list.tail = nullptr;
+    while (_list.head) pop_front();
+    _list.size = other._list.size;
+    _list.head = other._list.head;
+    _list.tail = other._list.tail;
+    other._list.size = 0;
+    other._list.head = nullptr;
+    other._list.tail = nullptr;
   }
   return *this;
 }
@@ -54,16 +54,16 @@ s21::deque<T> &s21::deque<T>::operator=(deque &&other) {
 // Deque Element access
 template <typename T>
 typename s21::deque<T>::const_reference s21::deque<T>::front() const {
-  if (list.head)
-    return list.head->data;
+  if (_list.head)
+    return _list.head->data;
   else
     throw std::logic_error("The deque is empty, front pointer equals nullptr");
 }
 
 template <typename T>
 typename s21::deque<T>::const_reference s21::deque<T>::back() const {
-  if (list.tail)
-    return list.tail->data;
+  if (_list.tail)
+    return _list.tail->data;
   else
     throw std::logic_error("The deque is empty, back pointer equals nullptr");
 }
@@ -71,73 +71,73 @@ typename s21::deque<T>::const_reference s21::deque<T>::back() const {
 // Deque Capacity
 template <typename T>
 bool s21::deque<T>::empty() const {
-  return list.head == nullptr;
+  return _list.head == nullptr;
 }
 
 template <typename T>
 typename s21::deque<T>::size_type s21::deque<T>::size() const {
-  return list.size;
+  return _list.size;
 }
 
 // Deque Modifiers
 template <typename T>
 void s21::deque<T>::push_back(const_reference value) {
   Node *new_node = new Node(value);
-  if (list.tail) {
-    new_node->next = list.tail;
-    list.tail->previous = new_node;
-    list.tail = new_node;
+  if (_list.tail) {
+    new_node->next = _list.tail;
+    _list.tail->previous = new_node;
+    _list.tail = new_node;
   } else {
-    list.tail = new_node;
-    if (list.head) {
-      Node *current = list.head;
-      while (list.head->previous) current = current->previous;
-      current->previous = list.tail;
-      list.tail->next = current;
+    _list.tail = new_node;
+    if (_list.head) {
+      Node *current = _list.head;
+      while (_list.head->previous) current = current->previous;
+      current->previous = _list.tail;
+      _list.tail->next = current;
     } else
-      list.head = new_node;
+      _list.head = new_node;
   }
-  ++list.size;
+  ++_list.size;
 }
 
 template <typename T>
 void s21::deque<T>::push_front(const_reference value) {
   Node *new_node = new Node(value);
-  if (list.head) {
-    new_node->previous = list.head;
-    list.head->next = new_node;
-    list.head = new_node;
+  if (_list.head) {
+    new_node->previous = _list.head;
+    _list.head->next = new_node;
+    _list.head = new_node;
   } else {
-    list.head = new_node;
-    if (list.tail) {
-      Node *current = list.tail;
+    _list.head = new_node;
+    if (_list.tail) {
+      Node *current = _list.tail;
       while (current->next) current = current->next;
-      current->next = list.head;
-      list.head->previous = current;
+      current->next = _list.head;
+      _list.head->previous = current;
     } else
-      list.tail = new_node;
+      _list.tail = new_node;
   }
-  ++list.size;
+  ++_list.size;
 }
 
 template <typename T>
 void s21::deque<T>::pop_front() {
-  if (list.head) {
-    if (list.head->previous) {
-      Node *previous_node = list.head->previous;
-      delete list.head;
-      list.head = previous_node;
+  if (_list.head) {
+    if (_list.head->previous) {
+      Node *previous_node = _list.head->previous;
+      delete _list.head;
+      _list.head = previous_node;
     } else {
-      Node *node = list.head;
+      Node *node = _list.head;
       delete node;
-      list.head = nullptr;
-      list.tail = nullptr;
+      _list.head = nullptr;
+      _list.tail = nullptr;
     }
-    --list.size;
+    --_list.size;
   }
 }
 
 template <typename T>
 void s21::deque<T>::swap(deque &other) {
-  std::swap(list, other.list);
+  std::swap(_list, other._list);
 }
