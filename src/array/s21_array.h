@@ -2,7 +2,7 @@
 
 namespace s21 {
 
-template<typename T>
+template <typename T, size_t N>
 class array {
  public:
   // Array Member type
@@ -19,13 +19,13 @@ class array {
   array(const array &other);
   array(array &&other);
   ~array();
-  array operator=(array &&other);
+  array &operator=(array &&other);
 
   // Array Element access
   reference at(size_type pos);
   reference operator[](size_type pos);
-  const_reference front();
-  const_reference back();
+  const_reference front() const;
+  const_reference back() const;
   iterator data();
 
   // Array Iterators
@@ -33,18 +33,19 @@ class array {
   iterator end();
 
   // Array Capacity
-  bool empty();
-  size_type size();
-  size_type max_size();
+  bool empty() const;
+  size_type size() const;
+  size_type max_size() const;
 
   // Array Modifiers
-  void swap(array& other);
+  void swap(array &other);
   void fill(const_reference value);
-  
+
  private:
-  
+  size_type _size;
+  value_type _data[N] = {};
 };
 
-} // namespace s21
+}  // namespace s21
 
 #include "s21_array.tpp"
