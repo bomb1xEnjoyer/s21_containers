@@ -65,17 +65,20 @@ typename s21::array<T, N>::const_reference s21::array<T, N>::back() const {
 
 template <typename T, size_t N>
 typename s21::array<T, N>::iterator s21::array<T, N>::data() {
+  if (empty()) throw std::logic_error("Array is empty");
   return _data;
 }
 
 // Array Iterators
 template <typename T, size_t N>
 typename s21::array<T, N>::iterator s21::array<T, N>::begin() {
+  if (empty()) throw std::logic_error("Array is empty");
   return &_data[0];
 }
 
 template <typename T, size_t N>
 typename s21::array<T, N>::iterator s21::array<T, N>::end() {
+  if (empty()) throw std::logic_error("Array is empty");
   return &_data[_size];
 }
 
