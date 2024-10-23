@@ -34,14 +34,16 @@ s21::array<T, N> &s21::array<T, N>::operator=(array &&other) {
 // Array Element access
 template <typename T, size_t N>
 typename s21::array<T, N>::reference s21::array<T, N>::at(size_type pos) {
-  if (pos >= _size) throw std::out_of_range("Index out of range");
+  if (pos >= _size || pos < 0 || _size == 0)
+    throw std::out_of_range("Index out of range");
   return (*this)[pos];
 }
 
 template <typename T, size_t N>
 typename s21::array<T, N>::reference s21::array<T, N>::operator[](
     size_type pos) {
-  if (pos >= _size) throw std::out_of_range("Index out of range");
+  if (pos >= _size || pos < 0 || _size == 0)
+    throw std::out_of_range("Index out of range");
   return _data[pos];
 }
 
