@@ -36,7 +36,7 @@ template <typename T, size_t N>
 typename s21::array<T, N>::reference s21::array<T, N>::at(size_type pos) {
   if (pos >= _size || pos < 0)
     throw std::out_of_range("Index out of range");
-  else if (_size == 0)
+  else if (empty())
     throw std::logic_error("Array is empty");
   return (*this)[pos];
 }
@@ -46,7 +46,7 @@ typename s21::array<T, N>::reference s21::array<T, N>::operator[](
     size_type pos) {
   if (pos >= _size || pos < 0)
     throw std::out_of_range("Index out of range");
-  else if (_size == 0)
+  else if (empty())
     throw std::logic_error("Array is empty");
   return _data[pos];
 }
