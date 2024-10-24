@@ -6,7 +6,7 @@ s21::array<T, N>::array() : _size(N) {}
 
 template <typename T, size_t N>
 s21::array<T, N>::array(std::initializer_list<value_type> const &items)
-    : _size(items.size()) {
+    : _size(N) {
   std::copy(items.begin(), items.end(), _data);
 }
 
@@ -101,10 +101,7 @@ typename s21::array<T, N>::size_type s21::array<T, N>::max_size() const {
 // Array Modifiers
 template <typename T, size_t N>
 void s21::array<T, N>::swap(array &other) {
-  if (*this != other) {
-    std::swap(_data, other._data);
-    std::swap(_size, other._size);
-  }
+  std::swap(_data, other._data);
 }
 
 template <typename T, size_t N>
